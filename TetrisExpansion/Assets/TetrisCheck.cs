@@ -3,56 +3,66 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TetrisCheck : MonoBehaviour {
-	public GameObject blockPrefab, latestBlock;
-	private List<GameObject> TetrisCheckers = new List<GameObject>();
 	private bool ifTetris = false;
 	private bool checkForTetris = true;
-
+	private int howManyBlocks = 0;
+	private Vector3 origin;
+	private Vector3 newPos;
+	public int width = 20;
+	public int height = 20;
 	void Start(){
-		for(int i = 0; i < gameObject.transform.childCount; i++){
-			TetrisCheckers.Add(gameObject.transform.GetChild(i).gameObject);
-		}
-	}
+		origin = this.transform.position;
+		newPos = origin;
 
-	void Update(){
-		if(checkForTetris){
-			Check();
-		}
+		EventManager.CheckTetris += Check;
+		EventManager.GotTetris += IncreaseSize;
 	}
 
 	public void Check(){
-		for(int i = 0; i < TetrisCheckers.Count; i++){
-			RaycastHit hit;
-			if (Physics.Raycast(TetrisCheckers[i].transform.position, transform.TransformDirection(-Vector3.forward), out hit, Mathf.Infinity))
-			{
-				if(hit.transform.tag == "floor"){
-					ifTetris = true;
+		
+		while(newPos.y < height){
+			while(newPos.x < width){
+				Collider[] hitColliders = Physics.OverlapBox(transform.position,new Vector3(0.1f,0.1f,0.1f),Quaternion.identity);
+				if(hitColliders.Length > 0){
+					newPos.x += 2;
+					transform.position = newPos;
+					Debug.Log(transform.localPosition.x + " this x position has the block " + hitColliders[0] + " in it");
+				} else {
+					Debug.Log("no tetris");
+					transform.position = origin;
+					newPos.x = origin.x;
+					newPos.y += 2;
+					break;
 				}
 			}
-			else
-			{
-				ifTetris = false;
+
+			if(newPos.x >= width){
+				Debug.Log("Tetris!!");
+				EventManager.GoTetris();
 				break;
 			}
 		}
 
-		if(ifTetris){
-			Debug.Log("There's a Tetris!!!!");
-			EventManager Instance = new EventManager();
-			Instance.GoTetris();
-			StartCoroutine(WaitForNext());
+		if(newPos.y >= height){
+			newPos.y = origin.y;
 		}
+		
+		
 	}
 
 	public void IncreaseSize(){
-		latestBlock =  Instantiate (blockPrefab, latestBlock.transform.position, latestBlock.transform.rotation);
-		latestBlock.transform.parent = transform;
-		latestBlock.transform.position = new Vector2(latestBlock.transform.position.x + 2, latestBlock.transform.position.y);
-	}
-
-	IEnumerator WaitForNext(){
-		checkForTetris = false;
-		yield return new WaitForSeconds(2);
-		checkForTetris = true;
+		width += 2;
+		height += 2;
 	}
 }
+
+/*if(hit.transform.tag == "floor"){
+					howManyBlocks ++;
+					//Debug.Log("how many blocks in view" + howManyBlocks);
+					if(howManyBlocks == TetrisCheckers.Count){
+						howManyBlocks = 0;
+						Debug.Log("There's a Tetris!!!!");
+						EventManager.GoTetris();
+						StartCoroutine(WaitForNext());
+					}
+				} */
