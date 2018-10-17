@@ -20,7 +20,6 @@ public class Block : MonoBehaviour {
 				if(hit.transform.tag == "floor"){
 					GetComponent<Renderer>().material.color = Color.red;
 					GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.red);
-					EventManager.Checker();
 					transform.parent.GetComponent<FormedBlock>().Change();
 					this.enabled = false;
 					return;

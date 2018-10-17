@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TetrisCheck : MonoBehaviour {
-	private bool ifTetris = false;
-	private bool checkForTetris = true;
-	private int howManyBlocks = 0;
 	private Vector3 origin;
 	private Vector3 newPos;
 	public int width = 20;
 	public int height = 20;
+	private int howManyPoints;
 	void Start(){
 		origin = this.transform.position;
 		newPos = origin;
@@ -18,35 +16,50 @@ public class TetrisCheck : MonoBehaviour {
 		EventManager.GotTetris += IncreaseSize;
 	}
 
+	void Update(){
+		Debug.Log(howManyPoints + " : building up");
+	}
+
 	public void Check(){
-		
 		while(newPos.y < height){
 			while(newPos.x < width){
 				Collider[] hitColliders = Physics.OverlapBox(transform.position,new Vector3(0.1f,0.1f,0.1f),Quaternion.identity);
 				if(hitColliders.Length > 0){
 					newPos.x += 2;
 					transform.position = newPos;
-					Debug.Log(transform.localPosition.x + " this x position has the block " + hitColliders[0] + " in it");
-				} else {
-					Debug.Log("no tetris");
-					transform.position = origin;
+					//Debug.Log(transform.localPosition.x + " this x position has the block " + hitColliders[0] + " in it");
+				} else { 
+					//Debug.Log("no tetris");
 					newPos.x = origin.x;
 					newPos.y += 2;
+					transform.position = newPos;
 					break;
 				}
 			}
 
 			if(newPos.x >= width){
-				Debug.Log("Tetris!!");
-				EventManager.GoTetris();
-				break;
-			}
+				//Debug.Log("Tetris!!");
+				Debug.Log(howManyPoints + " : building up");
+				howManyPoints ++;
+				newPos.x = origin.x;
+				newPos.y += 2;
+				transform.position = newPos;
+			}	
+			
 		}
 
 		if(newPos.y >= height){
+			for(int i = 0; i < howManyPoints; i++){
+				Debug.Log("doing tetris");
+				EventManager.GoTetris();
+			}	
+			howManyPoints = 0;
 			newPos.y = origin.y;
-		}
-		
+			newPos.x = origin.x;
+			transform.position = origin;		
+		}	
+
+		//Debug.Log(howManyPoints + " : total");	
 		
 	}
 

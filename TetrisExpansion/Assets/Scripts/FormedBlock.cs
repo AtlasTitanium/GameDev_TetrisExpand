@@ -5,6 +5,7 @@ using UnityEngine;
 public class FormedBlock : MonoBehaviour {
 	private Block blocky;
 	private List<Block> blocks = new List<Block>();
+	public float time = 0.1f;
 	
 	void Start(){
 		for(int i = 0; i < transform.childCount; i++){
@@ -50,8 +51,9 @@ public class FormedBlock : MonoBehaviour {
 	}
 
 	IEnumerator DropDown(){
-		yield return new WaitForSeconds(0.1f);
+		yield return new WaitForSeconds(time);
 		transform.position = new Vector2(transform.position.x, transform.position.y - 1);
+
 		//Debug.Log(gameObject + " goes down");
 		StartCoroutine(DropDown());
 	}

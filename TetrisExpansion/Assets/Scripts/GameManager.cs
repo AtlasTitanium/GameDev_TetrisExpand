@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour {
 	void Start(){
 		CreateBlock();
 		EventManager.GotTetris += Sirtet;
+		EventManager.LostGame += GameOver;
+		EventManager.BlockDrop += CreateBlock;
 	}
 
 	void Update(){
@@ -35,11 +37,13 @@ public class GameManager : MonoBehaviour {
 	public void PlaceBlock(){
 		//this places the block
 		currentBlock = null;
-		CreateBlock();
+		EventManager.Checker();
 	}
 
 	public void Sirtet() {
 		//if Tetris complete
+		Debug.Log("Tetris!! / !!Sirtet");
+
 		int multiplier = 1;
 
 		rightwall.transform.position = new Vector2(rightwall.transform.position.x + multiplier*2, rightwall.transform.position.y + multiplier);
@@ -58,5 +62,11 @@ public class GameManager : MonoBehaviour {
 		transform.position = new Vector3(transform.position.x + multiplier, transform.position.y + multiplier, transform.position.z - multiplier*2);
 		light.transform.position = new Vector3(light.transform.position.x + multiplier, light.transform.position.y + multiplier, light.transform.position.z);
 		light.GetComponent<Light>().range += multiplier;
+	}
+
+	public void GameOver() {
+		//if Game over
+		Debug.Log("Game Over");
+		this.enabled = false;
 	}
 }
