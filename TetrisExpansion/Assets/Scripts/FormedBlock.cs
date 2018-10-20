@@ -14,6 +14,10 @@ public class FormedBlock : MonoBehaviour {
 		}
 		StartCoroutine(DropDown());
 	}
+
+	void OnEnable(){
+		StartCoroutine(DropDown());
+	}
 	void Update () {
 		bool noLeft = false;
 		bool noRight = false;
@@ -50,7 +54,7 @@ public class FormedBlock : MonoBehaviour {
 
 	}
 
-	IEnumerator DropDown(){
+	public IEnumerator DropDown(){
 		yield return new WaitForSeconds(time);
 		transform.position = new Vector2(transform.position.x, transform.position.y - 1);
 

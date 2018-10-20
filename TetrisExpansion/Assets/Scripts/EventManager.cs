@@ -20,6 +20,7 @@ public static class EventManager{
 
 	public static void Checker(){
 		if(CheckTetris != null){
+			Debug.Log("CheckForTetris");
 			CheckTetris();
 		}
 	}
@@ -30,6 +31,7 @@ public static class EventManager{
 
 	public static void GameOver(){
 		if(LostGame != null){
+			Debug.Log("GameOver");
 			LostGame();
 		}
 	}
@@ -40,7 +42,30 @@ public static class EventManager{
 
 	public static void DropBlock(){
 		if(BlockDrop != null){
+			Debug.Log("DropBlock");
 			BlockDrop();
+		}
+	}
+
+	//Pauze The Game
+	public delegate void stopGame();
+	public static event stopGame IfPauze;
+
+	public static void Pauze(){
+		if(IfPauze != null){
+			Debug.Log("PauzeGame");
+			IfPauze();
+		}
+	}
+
+	//Resume The Game
+	public delegate void go();
+	public static event go IfResume;
+
+	public static void Resume(){
+		if(IfResume != null){
+			Debug.Log("ResumeGame");
+			IfResume();
 		}
 	}
 }
