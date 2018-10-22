@@ -13,15 +13,21 @@ public class TetrisCheck : MonoBehaviour {
 		origin = this.transform.position;
 		newPos = origin;
 
-		EventManager.CheckTetris += Check;
-		EventManager.GotTetris += IncreaseSize;
+
 	}
 
 	void Reset()
     {
-        EventManager.CheckTetris += Check;
-		EventManager.GotTetris += IncreaseSize;	
+
     }
+	void OnEnable(){
+		EventManager.CheckTetris += Check;
+		EventManager.GotTetris += IncreaseSize;
+	}
+	void OnDisable(){
+		EventManager.CheckTetris -= Check;
+		EventManager.GotTetris -= IncreaseSize;	
+	}
 	
 	void Update(){
 		//Debug.Log(howManyPoints + " : building up");

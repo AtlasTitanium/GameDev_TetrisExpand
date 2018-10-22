@@ -13,10 +13,15 @@ public class GameOverCheck : MonoBehaviour {
 		//DontDestroyOnLoad(this.gameObject);
 		origin = this.transform.position;
 		newPos = origin;
+	}
 
+	void OnEnable(){
 		EventManager.CheckTetris += Check;
 		EventManager.GotTetris += IncreaseSize;
-		
+	}
+	void OnDisable(){
+		EventManager.CheckTetris -= Check;
+		EventManager.GotTetris -= IncreaseSize;
 	}
 
 	public void Check(){

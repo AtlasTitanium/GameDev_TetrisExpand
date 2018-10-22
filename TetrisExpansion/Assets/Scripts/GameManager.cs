@@ -17,11 +17,22 @@ public class GameManager : MonoBehaviour {
 	
 
 		CreateBlock();
+		
+	}
+
+	void OnEnable(){
 		EventManager.GotTetris += Sirtet;
 		EventManager.LostGame += GameOver;
 		EventManager.BlockDrop += CreateBlock;
 		EventManager.IfPauze += Pauze;
 		EventManager.IfResume += Resume;
+	}
+	void OnDisable(){
+		EventManager.GotTetris -= Sirtet;
+		EventManager.LostGame -= GameOver;
+		EventManager.BlockDrop -= CreateBlock;
+		EventManager.IfPauze -= Pauze;
+		EventManager.IfResume -= Resume;	
 	}
 
 	void Update(){

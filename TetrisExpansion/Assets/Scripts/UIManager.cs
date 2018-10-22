@@ -11,12 +11,19 @@ public class UIManager : MonoBehaviour {
 	private int score = 0;
 
 	void Start () {
-		EventManager.GotTetris += IncreaseScore;
-		EventManager.LostGame += StartGameOver;
 		ScoreText.GetComponent<Text>().text = "Score : " + score;
 
 		Button pauzeBtn = Resume.GetComponent<Button>();
         pauzeBtn.onClick.AddListener(ResumeGame);
+	}
+	
+	void OnEnable(){
+		EventManager.GotTetris += IncreaseScore;
+		EventManager.LostGame += StartGameOver;
+	}
+	void OnDisable(){
+		EventManager.GotTetris -= IncreaseScore;
+		EventManager.LostGame -= StartGameOver;
 	}
 
 	void Update(){
