@@ -3,14 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Block : MonoBehaviour {
+	private bool leftBlocked;
+	public bool LeftBlocked{
+		get{
+			return leftBlocked;
+		}
+		set{
+			leftBlocked = false;
+		}
+	}
 
-	public bool LeftBlocked = false;
-	public bool RightBlocked = false;
+	private bool rightBlocked;
+	public bool RightBlocked{
+		get{
+			return rightBlocked;
+		}
+		set{
+			rightBlocked = false;
+		}
+	}
+
 
 	void Start(){
 		GetComponent<Renderer>().material.color = new Color(Random.RandomRange(0.5f,2),Random.RandomRange(0.5f,2),Random.RandomRange(0.5f,2));
 		GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(Random.RandomRange(0.5f,2),Random.RandomRange(0.5f,2),Random.RandomRange(0.5f,2)));
 	}
+
+	
 	void Update () {
 		if(transform != null){
 			RaycastHit hit;
@@ -29,8 +48,7 @@ public class Block : MonoBehaviour {
 			{
 				//there's a right wall so the player can only go left
 				if(hit.transform.tag == "wall" || hit.transform.tag == "floor"){
-					//Debug.Log("there's a right wall");
-					RightBlocked = true;
+					rightBlocked = true;
 					return;
 				}
 			}
@@ -38,13 +56,12 @@ public class Block : MonoBehaviour {
 			{
 				//there's a left wall so the player can only go right
 				if(hit.transform.tag == "wall" || hit.transform.tag == "floor"){
-					//Debug.Log("there's a left wall");
-					LeftBlocked = true;
+					leftBlocked = true;
 					return;
 				}
 			}
-			LeftBlocked = false;
-			RightBlocked = false;
+			leftBlocked = false;
+			rightBlocked = false;
 		}
 	}
 }

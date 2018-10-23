@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public static class EventManager{
-
 	//Got a tetris
 	public delegate void Tetris();
 	public static event Tetris GotTetris;
@@ -13,6 +12,7 @@ public static class EventManager{
 			GotTetris();
 		}
 	}
+
 
 	//Check if tetris
 	public delegate void Check();
@@ -25,6 +25,7 @@ public static class EventManager{
 		}
 	}
 
+
 	//Got Game over
 	public delegate void Loss();
 	public static event Loss LostGame;
@@ -35,6 +36,7 @@ public static class EventManager{
 			LostGame();
 		}
 	}
+
 
 	//Drop the next block
 	public delegate void Drop();
@@ -47,6 +49,7 @@ public static class EventManager{
 		}
 	}
 
+
 	//Pauze The Game
 	public delegate void stopGame();
 	public static event stopGame IfPauze;
@@ -57,6 +60,7 @@ public static class EventManager{
 			IfPauze();
 		}
 	}
+
 
 	//Resume The Game
 	public delegate void go();

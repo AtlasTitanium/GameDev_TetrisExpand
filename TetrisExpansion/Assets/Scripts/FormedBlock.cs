@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FormedBlock : MonoBehaviour {
+	private float TimeBetweenDrop = 0.4f;
 	private Block blocky;
 	private List<Block> blocks = new List<Block>();
-	public float time = 0.1f;
 	
+
 	void Start(){
 		for(int i = 0; i < transform.childCount; i++){
 			blocky = transform.GetChild(i).gameObject.GetComponent<Block>();
@@ -15,9 +16,12 @@ public class FormedBlock : MonoBehaviour {
 		StartCoroutine(DropDown());
 	}
 
+
 	void OnEnable(){
 		StartCoroutine(DropDown());
 	}
+
+
 	void Update () {
 		bool noLeft = false;
 		bool noRight = false;
@@ -54,23 +58,21 @@ public class FormedBlock : MonoBehaviour {
 
 	}
 
-	public IEnumerator DropDown(){
-		yield return new WaitForSeconds(time);
-		transform.position = new Vector2(transform.position.x, transform.position.y - 1);
 
-		//Debug.Log(gameObject + " goes down");
+	public IEnumerator DropDown(){
+		yield return new WaitForSeconds(TimeBetweenDrop);
+		transform.position = new Vector2(transform.position.x, transform.position.y - 1);
 		StartCoroutine(DropDown());
 	}
 
+
 	public void Change(){
-		//Debug.Log("they hit the ground");
 		StopAllCoroutines();
 		for(int f = 0; f < blocks.Count; f++){
 			blocks[f].GetComponent<Renderer>().material.color = Color.red;
 			blocks[f].GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.red);
 			blocks[f].transform.tag = "floor";
 		}
-		//Debug.Log("every block is floor");
 		this.enabled = false;
 	}
 }

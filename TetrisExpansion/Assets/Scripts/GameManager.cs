@@ -4,21 +4,19 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 	public GameObject roof, rightwall, leftwall, backwall, ground, light;
-	public GameObject currentBlock;
 	public GameObject[] tetrisBlockPrefabs;
+	private GameObject currentBlock;
 
-
+	//Singleton
 	public static GameManager instance = null;
 
 	void Start(){
+		//Instantiate Singleton
         if (instance == null) instance = this;
     	else if (instance != this) Destroy(gameObject);  
-		//DontDestroyOnLoad(this.gameObject);
-	
-
 		CreateBlock();
-		
 	}
+
 
 	void OnEnable(){
 		EventManager.GotTetris += Sirtet;
@@ -27,6 +25,8 @@ public class GameManager : MonoBehaviour {
 		EventManager.IfPauze += Pauze;
 		EventManager.IfResume += Resume;
 	}
+
+
 	void OnDisable(){
 		EventManager.GotTetris -= Sirtet;
 		EventManager.LostGame -= GameOver;
@@ -35,30 +35,19 @@ public class GameManager : MonoBehaviour {
 		EventManager.IfResume -= Resume;	
 	}
 
+
 	void Update(){
 		if(currentBlock != null){
-			//Debug.Log(currentBlock);
-			for(int i = 0; i < currentBlock.transform.childCount; i++){
-				Block blocky = currentBlock.transform.GetChild(i).gameObject.GetComponent<Block>();
-				if(!currentBlock.GetComponent<FormedBlock>().enabled){
-					PlaceBlock();
-				}
+			if(!currentBlock.GetComponent<FormedBlock>().enabled){
+				PlaceBlock();
 			}
-		} else {
-			//Destroy(currentBlock);
-			currentBlock = null;
-			CreateBlock();
 		}
 	}
+
+	
 	void CreateBlock(){
 		//this creates the block
 		int randomBlock = Random.RandomRange(0,tetrisBlockPrefabs.Length);
-		if(roof == null){
-			//Debug.Log("no roof" + Time.deltaTime);
-		}
-		if(roof != null){
-			//Debug.Log("yes roof" + Time.deltaTime);
-		}
 		if(roof.transform.position.x % 2 != 0){
 			currentBlock = Instantiate(tetrisBlockPrefabs[randomBlock], new Vector3(roof.transform.position.x + 1, roof.transform.position.y, roof.transform.position.z), roof.transform.rotation);
 		} else{
@@ -66,17 +55,16 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+
 	public void PlaceBlock(){
 		//this places the block
 		currentBlock = null;
-		//Debug.Log("Check for tet");
 		EventManager.Checker();
 	}
 
+
 	public void Sirtet() {
 		//if Tetris complete
-		//Debug.Log("Tetris!! / !!Sirtet");
-
 		int multiplier = 1;
 
 		rightwall.transform.position = new Vector2(rightwall.transform.position.x + multiplier*2, rightwall.transform.position.y + multiplier);
@@ -97,23 +85,25 @@ public class GameManager : MonoBehaviour {
 		light.GetComponent<Light>().range += multiplier;
 	}
 
+
 	public void GameOver() {
 		//if Game over
-		//Debug.Log("Game Over");
+		StopAllCoroutines();
+		currentBlock = null;
 		this.enabled = false;
 	}
 
+
 	private void Pauze() {
 		//if pauzed
-		//Debug.Log("PauzeGame");
 		if(currentBlock != null){
 			currentBlock.SetActive(false);
 		}
 	}
 
+
 	private void Resume() {
 		//if pauzed
-		//Debug.Log("ResumeGame");
 		if(currentBlock != null){
 			currentBlock.SetActive(true);
 		}

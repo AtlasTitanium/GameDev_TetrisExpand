@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -465,10 +465,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bb514b1774f04249aae8569513fb9e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScoreText: {fileID: 525498148}
-  PauzeMenu: {fileID: 1924794708}
-  GameOverMenu: {fileID: 1968032852}
-  Resume: {fileID: 1189439319}
+  scoreText: {fileID: 525498148}
+  pauzeMenu: {fileID: 1924794708}
+  gameOverMenu: {fileID: 1968032852}
+  resumeButton: {fileID: 1189439317}
 --- !u!1 &525498148
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,14 +634,13 @@ MonoBehaviour:
   backwall: {fileID: 1037734255}
   ground: {fileID: 1526452683}
   light: {fileID: 1151796425}
-  currentBlock: {fileID: 0}
   tetrisBlockPrefabs:
+  - {fileID: 1388462529407158, guid: 117ad2ec712284e47a5e45c6abadb70e, type: 2}
+  - {fileID: 1495478476009326, guid: b1762f843bb6f9841be79ce196fbaee3, type: 2}
   - {fileID: 1030600740534712, guid: 604550e7763ffaf4e965ef2371030fff, type: 2}
   - {fileID: 1515217808244402, guid: 9ea7ceae536a1ca449944e40767dfba8, type: 2}
-  - {fileID: 1388462529407158, guid: 117ad2ec712284e47a5e45c6abadb70e, type: 2}
-  - {fileID: 1649939606942894, guid: 265b7156f3a28dd4f8702d4799b8dad6, type: 2}
-  - {fileID: 1495478476009326, guid: b1762f843bb6f9841be79ce196fbaee3, type: 2}
   - {fileID: 1510169878333926, guid: 868758653719b314d853086c111de505, type: 2}
+  - {fileID: 1649939606942894, guid: 265b7156f3a28dd4f8702d4799b8dad6, type: 2}
 --- !u!1001 &641597384
 Prefab:
   m_ObjectHideFlags: 0
@@ -692,7 +691,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 707877320}
-  - component: {fileID: 707877321}
   m_Layer: 0
   m_Name: GamePlace
   m_TagString: Untagged
@@ -720,17 +718,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &707877321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 707877319}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9583070507694a84494a1c1c64959c16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &766893670
 GameObject:
   m_ObjectHideFlags: 0
@@ -1021,7 +1008,7 @@ Transform:
   m_GameObject: {fileID: 1037734255}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10, y: 10, z: 5}
-  m_LocalScale: {x: 20.2, y: 20.2, z: 0.1}
+  m_LocalScale: {x: 20, y: 20, z: 0.1}
   m_Children: []
   m_Father: {fileID: 707877320}
   m_RootOrder: 3
@@ -1147,7 +1134,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Return
+  m_Text: Restart
 --- !u!222 &1097215648
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1625,7 +1612,7 @@ Transform:
   m_GameObject: {fileID: 1324070015}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 10, y: 20, z: 0}
-  m_LocalScale: {x: 20.2, y: 0.099999994, z: 10.2}
+  m_LocalScale: {x: 20, y: 0.099999994, z: 10}
   m_Children: []
   m_Father: {fileID: 707877320}
   m_RootOrder: 4
@@ -1849,7 +1836,7 @@ Transform:
   m_GameObject: {fileID: 1526452683}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 10, y: 0, z: 0}
-  m_LocalScale: {x: 20.2, y: 0.1, z: 10.2}
+  m_LocalScale: {x: 20, y: 0.1, z: 10}
   m_Children: []
   m_Father: {fileID: 707877320}
   m_RootOrder: 0
